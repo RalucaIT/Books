@@ -22,26 +22,23 @@ public class UserController {
 
     // (head) list, get, create, delete, put /post
     @RequestMapping(method = RequestMethod.POST) // creez 1 user.
-     public com.example.mybooklibrary.entities.User createUser(@RequestBody com.example.mybooklibrary.entities.User user) {
+     public User createUser(@RequestBody User user) {
          return userService.createUser(user);
      }
 
-     @RequestMapping(method = RequestMethod.GET) // doar vad userii, NU creez nimic.
+     @RequestMapping(method = RequestMethod.GET) // doar returnez/vad userii, NU creez nimic.
      public List<com.example.mybooklibrary.entities.User> getUsers() {
         return userService.getUsers();
      }
 
     @RequestMapping(value = "{user_id_table}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Integer user_id_table) {
+    public void delete(@PathVariable Long user_id_table) {
         userService.deleteById(user_id_table);
     }
 
-    @RequestMapping(value = "{user_id_table}", method = RequestMethod.PUT)
-    public User update(@PathVariable Integer user_id_table, @RequestBody User user) {
-        User existingUser = userService.getReferenceById(user_id_table);
-        BeanUtils.copyProperties(user, existingUser, "user_id_table");
-        return userService.saveAndFlush(existingUser);
+    @RequestMapping(value = "{user_id_table}", method = RequestMethod.PUT) // editez 1 user.
+    public User update(@PathVariable Long user_id_table, @RequestBody User user) {
+        return userService.saveAndFlush(user_id_table, user);
     }
-
 }
 
