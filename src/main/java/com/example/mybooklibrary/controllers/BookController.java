@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping ("/api/books")
+@RequestMapping ("/books")
 public class BookController {
     @Autowired // prin Spring, leg Controller-ul de (crearea noii instante de) BookService.
     private BookService bookService;
 
     //get, post, put, delete, head
-    @RequestMapping(method = RequestMethod.POST) // creez 1 book.
-    public void createBook(@RequestBody Book book) {
-        bookService.createBook(book); // (ma folosesc de userId ca sa stiu cine a creat cartea)
+    @RequestMapping(method = RequestMethod.POST, path = "/add_book") // creez 1 book.
+    public Book createBook(@RequestBody Book book) {
+        return bookService.createBook(book); // (ma folosesc de userId ca sa stiu cine a creat cartea)
     }
 
-    @RequestMapping(method = RequestMethod.GET) // doar vad books, NU creez nimic.
+    @RequestMapping(method = RequestMethod.GET, path = "/show_books") // doar vad books, NU creez nimic.
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
@@ -33,3 +33,5 @@ public class BookController {
         return bookService.getBookByTitleOrAuthor(title, author);
     }
 }
+
+// definesc path-ul si apelez fct din service, ce apeleaza fct din tabele / repo-uri.

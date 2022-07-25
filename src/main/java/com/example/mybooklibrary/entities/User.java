@@ -42,6 +42,10 @@ public class User { // actually, it will be only 1 single instance/row of this U
     @OneToMany(mappedBy = "user")
     private List<BookOwner> bookOwnerList;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Borrowed> borrowedList;
+
     public User(Long userId) {
         this.user_id_table = userId;
     }

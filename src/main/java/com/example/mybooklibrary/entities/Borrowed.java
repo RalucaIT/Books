@@ -27,6 +27,7 @@ public class Borrowed {
     @ManyToOne
     @JoinColumn(name = "book_onwer_id_table")
     private BookOwner bookOwner;
+    //bookOwner.get_book_owner_id?  // getBookOwnerId
 
     @ManyToOne
     @JoinColumn(name = "user_id_table")
