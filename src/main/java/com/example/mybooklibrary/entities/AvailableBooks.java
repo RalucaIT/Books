@@ -24,8 +24,4 @@ public class AvailableBooks {
     @ManyToOne
     private BookOwner bookOwner;
 
-    public AvailableBooks(Long availableBookId, Long bookOwnerIdTable) {
-        this.availableBookId = availableBookId;
-        this.bookOwner = new BookOwner(bookOwnerIdTable);
-    }
 }

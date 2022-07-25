@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface BorrowedRepository  extends JpaRepository<Borrowed, Long> {
+public interface BorrowedRepository extends JpaRepository<Borrowed, Long> {
     List<Borrowed> findAll();
 }

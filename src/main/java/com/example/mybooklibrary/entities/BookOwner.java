@@ -24,9 +24,6 @@ public class BookOwner {
     @ManyToOne
     private Book book;
 
-    //user id
-    private Long userId;
-
     @JoinColumn(name = "user_id_table")
     @ManyToOne
     private User user;
@@ -39,20 +36,5 @@ public class BookOwner {
     @OneToMany(mappedBy = "bookOwner")
     private List<AvailableBooks> availableBooksList;
 
-    public BookOwner(Long book_owner_id_table, Long userId, Long book_id_table) {
-        this.book_owner_id_table = book_owner_id_table;
-        this.user = new User(userId);
-        this.book = new Book(book_id_table);
-    }
 
-    public BookOwner(Book book, Long ownerId) {
-        this.book = book;
-        this.userId = ownerId;
-    }
-
-    public BookOwner(Long book_owner_id_table) {
-        this.book_owner_id_table = book_owner_id_table;
-    }
 }
-
-

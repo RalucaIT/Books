@@ -28,37 +28,41 @@ public class BookOwnerService {
         return bookOwnerRepository.saveAndFlush(bookOwner);
     }*/
 
-    public Book addBookByUser(Book book, Long userId) {
-//        if(book == null){
-//            System.out.println("Nu era nici-o carte");
-//            return;
-
-        BookOwner bookOwner = new BookOwner(book, userId);
-        bookOwnerRepository.save(bookOwner);
-
-        List<Book> books = bookRepository.findAll();
-        if (!books.contains(book)) {
-            bookRepository.save(book);
-        }
-        return book;
-
-    }
+//    public Book addBookByUser(Book book, Long userId) {
+////        if(book == null){
+////            System.out.println("Nu era nici o carte");
+////            return;
+//
+//        BookOwner bookOwner = new BookOwner();
+//        bookOwnerRepository.save(bookOwner);
+//
+//        List<Book> books = bookRepository.findAll();
+//        if (!books.contains(book)) {
+//            bookRepository.save(book);
+//        }
+//        return book;
+//
+//    }
 
     public BookOwner createBookOwner(Long bookId, Long userId) {
 
-        Optional<Book> bookOptional = bookRepository.findById(bookId);
-        if (bookOptional.isEmpty()) {
-            return null;
-        }
+//        Optional<Book> bookOptional = bookRepository.findById(bookId);
+//        if (bookOptional.isEmpty()) {
+//            return null;
+//        }
 
-        Book book = bookOptional.get();
+//        Book book = bookOptional.get();
 
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty()) {
-            return null;
-        }
+        Book book = bookRepository.findById(bookId).get();
 
-        User user = userOptional.get();
+        //Optional<User> userOptional = userRepository.findById(userId);
+        //if (userOptional.isEmpty()) {
+        //    return null;
+        //}
+
+        //User user = userOptional.get();
+
+        User user = userRepository.findById(userId).get();
 
         BookOwner actualBookOwner = new BookOwner();
 
