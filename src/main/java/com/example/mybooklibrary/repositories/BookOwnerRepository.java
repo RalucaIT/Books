@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface BookOwnerRepository extends JpaRepository<BookOwner, Long> {
-
     List<BookOwner> findAll();
 }
 

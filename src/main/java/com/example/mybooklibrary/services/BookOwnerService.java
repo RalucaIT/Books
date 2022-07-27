@@ -70,8 +70,6 @@ public class BookOwnerService {
         actualBookOwner.setUser(user);
         return bookOwnerRepository.saveAndFlush(actualBookOwner);
     }
-
-//
     public List<BookOwner> getBookOwner() {
         return bookOwnerRepository.findAll();
     }

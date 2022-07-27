@@ -36,5 +36,4 @@ public class BookOwner {
     @OneToMany(mappedBy = "bookOwner")
     private List<AvailableBooks> availableBooksList;
 
-
 }
