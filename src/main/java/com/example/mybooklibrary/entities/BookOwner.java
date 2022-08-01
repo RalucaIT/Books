@@ -1,7 +1,10 @@
 package com.example.mybooklibrary.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,10 +30,13 @@ public class BookOwner {
     @JoinColumn(name = "user_id_table")
     @ManyToOne
     private User user;
-
+    /*
     @JsonIgnore
     @OneToMany(mappedBy = "bookOwner")
     private List<Borrowed> borrowed;
+    bookOwner.getUser().getBorrowedList(); // BETTER
+    bookOwner.getBorrowed(); // not ok
+    */
 
     @JsonIgnore
     @OneToMany(mappedBy = "bookOwner")

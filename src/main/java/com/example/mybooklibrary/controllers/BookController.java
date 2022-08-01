@@ -32,6 +32,12 @@ public class BookController {
     public List<Book> getBookByTitleOrAuthor(@RequestParam("title") Optional<String> title, @RequestParam("author") Optional<String> author) {
         return bookService.getBookByTitleOrAuthor(title, author);
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/available")
+    public List<Book> getAvailableBooks() {
+        return bookService.getAvailableBooks();
+    }
+    // here I wrote the method for all Available Books to be shown.
 }
 
 // definesc path-ul si apelez fct din service, ce apeleaza fct din tabele / repo-uri.

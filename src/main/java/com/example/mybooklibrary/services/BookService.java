@@ -3,12 +3,15 @@ package com.example.mybooklibrary.services;
 import com.example.mybooklibrary.entities.AvailableBooks;
 import com.example.mybooklibrary.entities.Book;
 import com.example.mybooklibrary.entities.BookOwner;
+import com.example.mybooklibrary.entities.Borrowed;
 import com.example.mybooklibrary.repositories.AvailableBooksRepository;
 import com.example.mybooklibrary.repositories.BookOwnerRepository;
 import com.example.mybooklibrary.repositories.BookRepository;
+import com.example.mybooklibrary.repositories.BorrowedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,9 @@ public class BookService {
 
     @Autowired
     private AvailableBooksRepository availableBookRepository;
+
+    @Autowired
+    private BorrowedRepository borrowedRepository;
 
     public Book createBook(Book book) {
         /*
@@ -56,7 +62,19 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public List<Book> getBookByTitleOrAuthor(Optional<String> title,Optional< String> author) {
+    public List<Book> getBookByTitleOrAuthor(Optional<String> title, Optional<String> author) {
         return bookRepository.findByTitleOrAuthor(title, author);
     }
-}
+
+    public List<Book> getAvailableBooks() {
+        List<Book> book = bookRepository.findAll();
+        List<Book> books = new ArrayList<>();
+        for (Book b : book) {
+            Borrowed borrowed = borrowedRepository.getBorrowedByBookOwner_Book(b);
+            if (borrowed == null) {
+                books.add(b);
+            }
+        }
+            return books;
+        }
+    }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookOwnerService {
@@ -24,10 +23,10 @@ public class BookOwnerService {
     @Autowired
     private BookRepository bookRepository;
 
-/*    public BookOwner createBookOwner(BookOwner bookOwner) {
+ /*    public BookOwner createBookOwner(BookOwner bookOwner) {
         return bookOwnerRepository.saveAndFlush(bookOwner);
-    }*/
-
+}
+ */
 //    public Book addBookByUser(Book book, Long userId) {
 ////        if(book == null){
 ////            System.out.println("Nu era nici o carte");
@@ -70,6 +69,7 @@ public class BookOwnerService {
         actualBookOwner.setUser(user);
         return bookOwnerRepository.saveAndFlush(actualBookOwner);
     }
+
     public List<BookOwner> getBookOwner() {
         return bookOwnerRepository.findAll();
     }
