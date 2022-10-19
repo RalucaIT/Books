@@ -1,5 +1,6 @@
 package com.example.mybooklibrary.controllers;
 
+import com.example.mybooklibrary.entities.Book;
 import com.example.mybooklibrary.entities.BookOwner;
 import com.example.mybooklibrary.services.BookOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,21 @@ public class BookOwnerController {
         return bookOwnerService.createBookOwner(bookId, userId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/getAll")
+    @RequestMapping(method = RequestMethod.GET, path = "/showBookOwners")
     public List<BookOwner> getBookOwner() {
         return bookOwnerService.getBookOwner();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/available")
+    public List<Book> getAvailableBooks() {
+        return bookOwnerService.getAvailableBooks();
+    }
+
+//    @RequestMapping(method = RequestMethod.GET, path = "/available")
+//    public List<BookOwner> getAvailableBooks() {
+//        return bookOwnerService.getAvailableBooks();
+//    }
+    // here I wrote the method for all Available Books to be shown.
 //    @RequestMapping(method = RequestMethod.POST, path = "/addBook")
 //    public Book addBookByUser(@RequestBody Book book, @RequestParam("ownerId") Long userId) {
 //        return bookOwnerService.addBookByUser(book, userId);

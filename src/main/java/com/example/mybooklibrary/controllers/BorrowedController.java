@@ -13,10 +13,10 @@ public class BorrowedController {
     private BorrowedService borrowedService;
 
     @PostMapping // better use @PostMapping rather than @RequestMapping
-    public Borrowed createBorrowed(@RequestParam Long bookOwnerId,
+    public Borrowed createBorrowed(@RequestParam Long bookId,
                                    @RequestParam Long userId,
                                    @RequestParam Integer borrowedWeeks) {
-        return borrowedService.createBorrowed(bookOwnerId, userId, borrowedWeeks);
+        return borrowedService.createBorrowed(bookId, userId, borrowedWeeks);
     }
 
     // how many borrowed // localDate.now

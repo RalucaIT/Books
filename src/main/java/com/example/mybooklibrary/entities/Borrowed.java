@@ -1,6 +1,8 @@
 package com.example.mybooklibrary.entities;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,13 +27,13 @@ public class Borrowed {
     @Column (name = "return_date")
     private LocalDate returnDate;
 
-    @ManyToOne
-    @JoinColumn(name = "book_onwer_id_table")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private BookOwner bookOwner; // here I bring the PK bookOwnerId from bookOwner table.
     // bookOwner.getBookOwnerId ?
 
-    @ManyToOne
-    @JoinColumn(name = "user_id_table")
-    private User user; // here I bring the PK userId from users table.
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    private User users; // here I bring the PK userId from users table.
 
 }

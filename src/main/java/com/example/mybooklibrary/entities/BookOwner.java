@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,15 +23,20 @@ public class BookOwner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_owner_id_table")
-    private Long book_owner_id_table;
+    private Long bookOwnerIdTable;
 
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "book_id_table")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Book book;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id_table")
-    @ManyToOne
-    private User user;
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    private User users;
+
+
     /*
     @JsonIgnore
     @OneToMany(mappedBy = "bookOwner")
@@ -38,8 +45,5 @@ public class BookOwner {
     bookOwner.getBorrowed(); // not ok
     */
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "bookOwner")
-    private List<AvailableBooks> availableBooksList;
 
 }

@@ -16,12 +16,12 @@ import java.util.List;
 public interface BorrowedRepository extends JpaRepository<Borrowed, Integer> {
     @Query("SELECT b FROM Borrowed b \n" +
             "JOIN b.bookOwner o\n" +
-            "ON b.bookOwner.book_owner_id_table = o.book_owner_id_table \n" +
-            "WHERE o.book_owner_id_table = :id")
+            "ON b.bookOwner.bookOwnerIdTable = o.bookOwnerIdTable \n" +
+            "WHERE o.bookOwnerIdTable = :id")
     List<Borrowed> getBorrowedBookByOthers(Integer id);
 
     @Query("SELECT b FROM Borrowed  b\n" +
-            "WHERE b.bookOwner.user.user_id_table = :userId")
+            "WHERE b.bookOwner.users.user_id_table = :userId")
     List<Borrowed> getBorrowedByAccount_id(Integer userId);
 
     @Query("SELECT b FROM Borrowed b \n" +
@@ -31,7 +31,8 @@ public interface BorrowedRepository extends JpaRepository<Borrowed, Integer> {
 //
 //    List<Borrowed> findAllByBookOwner_Book(List<Book> book);
 //
-
+    @Query("SELECT b FROM Borrowed b \n" +
+            "WHERE b.bookOwner.book = :book")
     Borrowed getBorrowedByBookOwner_Book(Book book);
 
 }
@@ -57,5 +58,6 @@ public interface BorrowedRepository extends JpaRepository<Borrowed, Integer> {
 - hot to generate "Diagrams" from the DB on the right here.
 - better annotate with @... rather than @...
 - how to comment multiple lines with // = ctrl+/
+- refactor all variables' names everywhere = shift+fn+F6
  */
 

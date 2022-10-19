@@ -1,10 +1,7 @@
 package com.example.mybooklibrary.services;
 
-import com.example.mybooklibrary.entities.AvailableBooks;
 import com.example.mybooklibrary.entities.Book;
-import com.example.mybooklibrary.entities.BookOwner;
 import com.example.mybooklibrary.entities.Borrowed;
-import com.example.mybooklibrary.repositories.AvailableBooksRepository;
 import com.example.mybooklibrary.repositories.BookOwnerRepository;
 import com.example.mybooklibrary.repositories.BookRepository;
 import com.example.mybooklibrary.repositories.BorrowedRepository;
@@ -22,10 +19,6 @@ public class BookService {
 
     @Autowired
     private BookOwnerRepository bookOwnerRepository;
-
-    @Autowired
-    private AvailableBooksRepository availableBookRepository;
-
     @Autowired
     private BorrowedRepository borrowedRepository;
 
@@ -46,7 +39,7 @@ public class BookService {
             bookRepository.saveAndFlush(book);
         BookOwner bookOwner = new BookOwner(null, userId, book.getBook_id_table());
         bookOwnerRepository.saveAndFlush(bookOwner);
-            AvailableBooks availableBooks = new AvailableBooks(null, bookOwner.getBook_owner_id_table());
+            AvailableBooks availableBooks = new AvailableBooks(null, bookOwner.getBookOwnerIdTable());
             // Borrowed borrowedBook = new Borrowed(null, data, userId, .....)
             // LocalDate.now().plusDays(7) -> o saptamana
             // LocalDate(2022,7,15) + LocalDate.now().plusDays(7);
@@ -54,7 +47,7 @@ public class BookService {
         }
         return "Book with User created";
     */
-
+// DUPLICATE logic pt Books, de facut exact aici (ca-n BookOwnerService)
         return bookRepository.saveAndFlush(book); // dau carte ca body in Postman si o adauga in tabela Books.
     }   // aceeasi carte poa' sa fie own-uita de useri diferiti.
 

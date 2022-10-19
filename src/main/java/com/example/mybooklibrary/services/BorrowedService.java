@@ -21,17 +21,16 @@ public class BorrowedService {
     private BookOwnerRepository bookOwnerRepository;
     @Autowired
     private UserRepository userRepository;
-    private Borrowed borrowedId;
 
-    public Borrowed createBorrowed(Long bookOwnerId, Long userId,Integer borrowedWeeks) {
+    public Borrowed createBorrowed(Long bookId, Long userId,Integer borrowedWeeks) {
 
-         BookOwner bookOwner = bookOwnerRepository.findById(bookOwnerId).get();
+         BookOwner bookOwner = bookOwnerRepository.findBookOwnerByBookId(bookId);
 
          User user = userRepository.findById(userId).get();
 
          Borrowed actualBorrowed = new Borrowed();
 
-        actualBorrowed.setUser(user);
+        actualBorrowed.setUsers(user);
         actualBorrowed.setBookOwner(bookOwner);
         actualBorrowed.setBorrowedDate(LocalDate.now());
         actualBorrowed.setReturnDate(LocalDate.now().plusWeeks(borrowedWeeks));

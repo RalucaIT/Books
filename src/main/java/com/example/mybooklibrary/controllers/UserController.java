@@ -5,8 +5,12 @@ import com.example.mybooklibrary.entities.User;
 import com.example.mybooklibrary.services.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController // these annotations help Spring MVC (Model-View-Controller) knows that these are Controllers.
@@ -23,23 +27,28 @@ public class UserController {
 
     // (head) list, get, create, delete, put /post
     @RequestMapping(method = RequestMethod.POST, path = "/add_user") // creez 1 user.
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/add_user").toUriString());
+        return ResponseEntity.created(uri).body(userService.createUser(user));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/show") // doar returnez/vad userii, NU creez nimic.
-    public List<User> getUsers() {
-        return userService.getUsers();
-    }
-
-    @RequestMapping(value = "{user_id_table}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long user_id_table) {
-        userService.deleteById(user_id_table);
+    @RequestMapping(method = RequestMethod.GET, path = "/show_users") // doar returnez/vad userii, NU creez nimic.
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> userList=userService.getUsers();
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{user_id_table}", method = RequestMethod.PUT) // editez 1 user.
-    public User update(@PathVariable Long user_id_table, @RequestBody User user) {
-        return userService.saveAndFlush(user_id_table, user);
+    public ResponseEntity<User> update(@PathVariable Long user_id_table, @RequestBody User user) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{user_id_table}").toUriString());
+        return ResponseEntity.created(uri).body(userService.updateUser(user_id_table,user));
+    }
+
+    @RequestMapping(value = "{user_id_table}", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@PathVariable Long user_id_table) {
+    String message= userService.deleteById(user_id_table);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{user_id_table}").toUriString());
+        return new ResponseEntity<>(message,HttpStatus.ACCEPTED);
     }
 }
 

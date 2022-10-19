@@ -2,13 +2,16 @@ package com.example.mybooklibrary.services;
 
 import com.example.mybooklibrary.entities.Book;
 import com.example.mybooklibrary.entities.BookOwner;
+import com.example.mybooklibrary.entities.Borrowed;
 import com.example.mybooklibrary.entities.User;
 import com.example.mybooklibrary.repositories.BookOwnerRepository;
 import com.example.mybooklibrary.repositories.BookRepository;
+import com.example.mybooklibrary.repositories.BorrowedRepository;
 import com.example.mybooklibrary.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +25,9 @@ public class BookOwnerService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private BorrowedRepository borrowedRepository;
 
  /*    public BookOwner createBookOwner(BookOwner bookOwner) {
         return bookOwnerRepository.saveAndFlush(bookOwner);
@@ -64,13 +70,37 @@ public class BookOwnerService {
         User user = userRepository.findById(userId).get();
 
         BookOwner actualBookOwner = new BookOwner();
-
-        actualBookOwner.setBook(book);
-        actualBookOwner.setUser(user);
-        return bookOwnerRepository.saveAndFlush(actualBookOwner);
+        BookOwner checkBookOwner = bookOwnerRepository.checkBookOwnerDuplicate(bookId,userId);
+        if(checkBookOwner == null) {
+            actualBookOwner.setBook(book);
+            actualBookOwner.setUsers(user);
+            return bookOwnerRepository.saveAndFlush(actualBookOwner);
+        }
+        return null;
     }
 
     public List<BookOwner> getBookOwner() {
         return bookOwnerRepository.findAll();
     }
+
+    public List<Book> getAvailableBooks() {
+        List<Book> book = bookRepository.findAll();
+        List<Book> books = new ArrayList<>();
+        for (Book b : book) {
+            Borrowed borrowed = borrowedRepository.getBorrowedByBookOwner_Book(b);
+            if (borrowed == null) {
+                books.add(b);
+            }
+        }
+        return books;
+    }
+
+
+
+//    SELECT COUNT(borrowedBookOwnerId).FROM borrowed WHERE borrowedBookOwnerId = "id";
+//
+//    SELECT bookOwnerId FROM booksOwner WHERE bo.bookIs = "bookIdTable"; // bo == alias
+//
+//    SELECT bookId FROM books b WHERE b.title = "title";
+
 }

@@ -26,29 +26,26 @@ public class User { // actually, it will be only 1 single instance/row of this U
     @Column (name = "user_id_table")
     private Long user_id_table;
 
-    @Column (name = "user_name")
+    @Column (name = "users_name")
     private String user_name;
 
-    @Column (name = "user_password")
-    @JsonProperty (access = JsonProperty.Access.WRITE_ONLY)
+    @Column (name = "users_password")
+    // @JsonProperty (access = JsonProperty.Access.WRITE_ONLY)
     @NonNull
     private String user_password;
 
-    @Column (name = "user_email")
+    @Column (name = "users_email")
     @NonNull
     private String user_email;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<BookOwner> bookOwnerList;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<Borrowed> borrowedList;
 
-    public User(Long userId) {
-        this.user_id_table = userId;
-    }
 }
 
 
