@@ -55,8 +55,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public List<Book> getBookByTitleOrAuthor(Optional<String> title, Optional<String> author) {
-        return bookRepository.findByTitleOrAuthor(title, author);
+    public List<Book> getBookByTitleOrAuthor(String title, String author) {
+        return bookRepository.findBookByTitleOrAuthor(title, author);
     }
 
     public List<Book> getAvailableBooks() {

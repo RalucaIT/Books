@@ -1,6 +1,7 @@
 package com.example.mybooklibrary.repositories;
 
 import com.example.mybooklibrary.entities.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,16 +18,20 @@ class UserRepositoryTest {
     @Autowired // this brings the object into container
     private UserRepository userRepository;
 
-
     @BeforeEach
-    void setup(){
+    public void setup() {
         userRepository.save(user);
     }
 
+    @AfterEach
+    public void tearDown() {
+        userRepository.deleteAll();
+    }
+
     @Test
-    void findAll() {
-        List<User> userList=List.of(user);
-        List<User>userTestList=userRepository.findAll();
+    public void findAll() {
+        List<User> userList = List.of(user);
+        List<User>userTestList = userRepository.findAll();
         assertThat(userRepository.findAll()).hasSize(1);
         assertThat(userTestList).isNotNull();
         assertThat(userTestList).usingRecursiveComparison().isEqualTo(userList);

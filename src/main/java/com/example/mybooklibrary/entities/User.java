@@ -2,10 +2,7 @@ package com.example.mybooklibrary.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -17,8 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 //
+@Builder
 @Entity
 @Table(name = "users")
+
 public class User { // actually, it will be only 1 single instance/row of this Users data.
     @Id // is the PK = primary key field.
     @GeneratedValue (strategy = GenerationType.IDENTITY) // specifies how the PK gets populated on a new record insert.
@@ -45,7 +44,6 @@ public class User { // actually, it will be only 1 single instance/row of this U
     @JsonIgnore
     @OneToMany(mappedBy = "users")
     private List<Borrowed> borrowedList;
-
 }
 
 

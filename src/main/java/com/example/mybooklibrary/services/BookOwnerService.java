@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookOwnerService {
@@ -67,8 +68,11 @@ public class BookOwnerService {
 
         //User user = userOptional.get();
 
-        User user = userRepository.findById(userId).get();
-
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = null;
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        }
         BookOwner actualBookOwner = new BookOwner();
         BookOwner checkBookOwner = bookOwnerRepository.checkBookOwnerDuplicate(bookId,userId);
         if(checkBookOwner == null) {

@@ -1,10 +1,7 @@
 package com.example.mybooklibrary.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 // @Data // in loc de Getter, Setter and AllArgs, but no "No Args".
 @Entity
 @Table(name = "books_owner")
@@ -45,5 +43,8 @@ public class BookOwner {
     bookOwner.getBorrowed(); // not ok
     */
 
-
+    public BookOwner(Book book, User users) {
+        this.book = book;
+        this.users = users;
+    }
 }

@@ -3,6 +3,7 @@ package com.example.mybooklibrary.services;
 import com.example.mybooklibrary.entities.BookOwner;
 import com.example.mybooklibrary.entities.Borrowed;
 import com.example.mybooklibrary.entities.User;
+import com.example.mybooklibrary.exceptions.ResourceNotFoundException;
 import com.example.mybooklibrary.repositories.BookOwnerRepository;
 import com.example.mybooklibrary.repositories.BorrowedRepository;
 import com.example.mybooklibrary.repositories.UserRepository;
@@ -22,11 +23,12 @@ public class BorrowedService {
     @Autowired
     private UserRepository userRepository;
 
-    public Borrowed createBorrowed(Long bookId, Long userId,Integer borrowedWeeks) {
+    public Borrowed createBorrowed(Long bookId, Long userId, Integer borrowedWeeks) {
 
          BookOwner bookOwner = bookOwnerRepository.findBookOwnerByBookId(bookId);
-
-         User user = userRepository.findById(userId).get();
+       // User user1 =userRepository.findById(user_id_table).orElseThrow(()->new ResourceNotFoundException("User with id "
+             //   +user_id_table+" not found"));
+         User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user with Id"+ userId +"not found"));
 
          Borrowed actualBorrowed = new Borrowed();
 
